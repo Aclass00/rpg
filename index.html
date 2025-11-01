@@ -3,27 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>لعبة الأبطال - RPG</title>
-    <link rel="stylesheet" href="css/style.css">
+    <title>تطبيقي</title>
+    <!-- إضافة Favicon لمنع الخطأ -->
+    <link rel="icon" href="data:,">
     
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore-compat.js"></script>
+    <!-- تحميل Firebase قبل الأكواد الخاصة -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
 </head>
 <body>
     <div id="app">
-        <div class="loading">
-            <div class="loading-spinner"></div>
-            <h2>⏳ جاري التحميل...</h2>
+        <h1>مرحباً بك في التطبيق</h1>
+        <div id="content">
+            <p>جاري التحميل...</p>
         </div>
     </div>
 
-    <!-- ملفات JavaScript بالترتيب الصحيح -->
-    <script src="js/firebase.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/game.js"></script>
-    <script src="js/auth.js"></script>
-    <script src="js/app.js"></script>
+    <!-- تحميل ملفات JavaScript بعد Firebase -->
+    <script src="firebase.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
