@@ -2,44 +2,36 @@
 class AuthSystem {
     constructor() {
         this.user = null;
+        this.gameApp = new GameApp();
         this.init();
     }
 
     init() {
-        // مراقبة حالة المستخدم
+        console.log('🔐 تهيئة نظام المصادقة...');
         auth.onAuthStateChanged((user) => {
+            console.log('👤 حالة المستخدم:', user ? 'مسجل' : 'غير مسجل');
             this.user = user;
             this.onAuthStateChange(user);
         });
     }
 
-    // تسجيل الدخول
-    async login(email, password) {
-        try {
-            const result = await auth.signInWithEmailAndPassword(email, password);
-            return { success: true, user: result.user };
-        } catch (error) {
-            return { success: false, error: error.message };
-        }
-    }
-
-    // إنشاء حساب
     async register(email, password, displayName) {
         try {
+            console.log('📝 إنشاء حساب جديد...');
             const result = await auth.createUserWithEmailAndPassword(email, password);
             await result.user.updateProfile({ displayName });
             
-            // إنشاء بيانات اللاعب الجديد
             await this.createPlayerData(result.user.uid, displayName);
             
             return { success: true, user: result.user };
         } catch (error) {
-            return { success: false, error: error.message };
+            console.error('❌ خطأ في إنشاء الحساب:', error);
+            return { success: false, error: this.getArabicError(error.code) };
         }
     }
 
-    // إنشاء بيانات اللاعب الجديد
     async createPlayerData(userId, displayName) {
+        console.log('💾 إنشاء بيانات اللاعب...');
         const playerData = {
             displayName: displayName,
             stats: {
@@ -70,33 +62,33 @@ class AuthSystem {
                 level: 1,
                 totalUpgrades: 0,
                 mineEntries: 0,
-                lastDailyReset: new Date()
+                lastDailyReset: new Date().toISOString()
             },
-            createdAt: new Date(),
-            lastLogin: new Date()
+            createdAt: new Date().toISOString(),
+            lastLogin: new Date().toISOString()
         };
 
         await db.collection('players').doc(userId).set(playerData);
+        console.log('✅ تم إنشاء بيانات اللاعب');
     }
 
-    // تسجيل الخروج
-    async logout() {
+    async login(email, password) {
         try {
-            await auth.signOut();
-            return { success: true };
+            console.log('🔑 تسجيل الدخول...');
+            const result = await auth.signInWithEmailAndPassword(email, password);
+            return { success: true, user: result.user };
         } catch (error) {
-            return { success: false, error: error.message };
+            console.error('❌ خطأ في تسجيل الدخول:', error);
+            return { success: false, error: this.getArabicError(error.code) };
         }
     }
 
-    // تحديث حالة المصادقة
     onAuthStateChange(user) {
-        const app = document.getElementById('app');
         if (user) {
-            // المستخدم مسجل الدخول - عرض اللعبة
-            this.showGame();
+            console.log('✅ المستخدم مسجل الدخول');
+            this.gameApp.init(user);
         } else {
-            // المستخدم غير مسجل - عرض صفحة الدخول
+            console.log('ℹ️ عرض صفحة الدخول');
             this.showLogin();
         }
     }
@@ -137,6 +129,11 @@ class AuthSystem {
         const email = document.getElementById('email').value;
         const password = document.getElementById('password').value;
         
+        if (!email || !password) {
+            this.showAuthMessage({ success: false, error: 'يرجى إدخال البريد الإلكتروني وكلمة المرور' });
+            return;
+        }
+
         const result = await this.login(email, password);
         this.showAuthMessage(result);
     }
@@ -148,6 +145,11 @@ class AuthSystem {
         
         if (!displayName) {
             this.showAuthMessage({ success: false, error: 'يرجى إدخال اسم اللاعب' });
+            return;
+        }
+
+        if (password.length < 6) {
+            this.showAuthMessage({ success: false, error: 'كلمة المرور يجب أن تكون 6 أحرف على الأقل' });
             return;
         }
 
@@ -164,11 +166,16 @@ class AuthSystem {
         }
     }
 
-    showGame() {
-        // سيتم تنفيذ هذا في app.js
-        window.gameApp.init();
+    getArabicError(errorCode) {
+        const errors = {
+            'auth/invalid-email': 'البريد الإلكتروني غير صحيح',
+            'auth/user-disabled': 'هذا الحساب معطل',
+            'auth/user-not-found': 'المستخدم غير موجود',
+            'auth/wrong-password': 'كلمة المرور غير صحيحة',
+            'auth/email-already-in-use': 'البريد الإلكتروني مستخدم بالفعل',
+            'auth/weak-password': 'كلمة المرور ضعيفة جداً',
+            'auth/network-request-failed': 'خطأ في الاتصال بالإنترنت'
+        };
+        return errors[errorCode] || 'حدث خطأ: ' + errorCode;
     }
 }
-
-// إنشاء instance من نظام المصادقة
-const authSystem = new AuthSystem();
