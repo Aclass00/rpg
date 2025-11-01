@@ -1,11 +1,9 @@
 // أدوات مساعدة
 const utils = {
-    // تنسيق الأرقام
     formatNumber: (num) => {
         return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     },
 
-    // توليد أرقام عشوائية بنسب ذكية
     smartRandom: (changeCount) => {
         const improvement = Math.min(changeCount * 0.5, 40);
         const chances = {
@@ -17,20 +15,18 @@ const utils = {
         const random = Math.random() * 100;
         
         if (random < chances.low) {
-            return Math.floor(Math.random() * 33) + 1; // 1-33
+            return Math.floor(Math.random() * 33) + 1;
         } else if (random < chances.low + chances.medium) {
-            return Math.floor(Math.random() * 34) + 34; // 34-67
+            return Math.floor(Math.random() * 34) + 34;
         } else {
-            return Math.floor(Math.random() * 33) + 68; // 68-100
+            return Math.floor(Math.random() * 33) + 68;
         }
     },
 
-    // حساب القيمة الفعلية للتعديل
     calculateUpgradeValue: (randomValue, playerLevel) => {
         return Math.round(randomValue * playerLevel * 0.24);
     },
 
-    // تحويل التاريخ إلى تنسيق مقروء
     formatDate: (date) => {
         return new Date(date).toLocaleDateString('ar-SA', {
             year: 'numeric',
@@ -39,23 +35,11 @@ const utils = {
         });
     },
 
-    // إظهار رسالة للمستخدم
     showMessage: (message, type = 'info') => {
         const messageDiv = document.createElement('div');
-        messageDiv.className = `message ${type}`;
+        messageDiv.className = 'message';
         messageDiv.innerHTML = message;
-        messageDiv.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            padding: 15px;
-            border-radius: 8px;
-            color: white;
-            z-index: 1000;
-            font-weight: bold;
-            max-width: 300px;
-            background: ${type === 'error' ? '#f44336' : type === 'success' ? '#4CAF50' : '#2196F3'};
-        `;
+        messageDiv.style.background = type === 'error' ? '#f44336' : type === 'success' ? '#4CAF50' : '#2196F3';
         
         document.body.appendChild(messageDiv);
         
