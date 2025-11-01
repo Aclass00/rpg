@@ -25,19 +25,29 @@
     <script src="js/game.js"></script>
     <script src="js/auth.js"></script>
     
-    <!-- إما استخدم الملف OR الكود المدمج - ليس الاثنين معاً! -->
+    <!-- احذف هذا السطر تماماً: <script src="js/app.js"></script> -->
     
-    <!-- الخيار 1: استخدم الملف الأصلي (إذا أصلحته) -->
-    <!-- <script src="js/app.js"></script> -->
-    
-    <!-- الخيار 2: استخدم الكود المدمج (افضل) -->
+    <!-- واستبدله بهذا: -->
     <script>
     // === app.js ===
+    console.log('🚀 بدء تحميل التطبيق...');
     let authSystem;
-    window.addEventListener('load', function() {
-        console.log('✅ الصفحة جاهزة - بدء التطبيق');
-        authSystem = new AuthSystem();
-    });
+    
+    try {
+        window.addEventListener('load', function() {
+            console.log('✅ الصفحة جاهزة - بدء التطبيق');
+            authSystem = new AuthSystem();
+        });
+    } catch (error) {
+        console.error('❌ خطأ في التطبيق:', error);
+        document.getElementById('app').innerHTML = `
+            <div style="padding: 20px; text-align: center; color: white;">
+                <h2>❌ حدث خطأ في التطبيق</h2>
+                <p>${error.message}</p>
+                <button onclick="location.reload()" style="padding: 10px 20px; margin: 10px;">إعادة تحميل</button>
+            </div>
+        `;
+    }
     </script>
 </body>
 </html>
