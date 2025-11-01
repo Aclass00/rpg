@@ -1,20 +1,49 @@
-// إعدادات Firebase
+// تكوين Firebase
 const firebaseConfig = {
-    apiKey: "AIzaSyBQIcqbTtJY0xoaeL2FN1L-Zf5IGw59H3w",
-    authDomain: "rpg-browser-game-ece4b.firebaseapp.com",
-    databaseURL: "https://rpg-browser-game-ece4b-default-rtdb.europe-west1.firebasedatabase.app",
-    projectId: "rpg-browser-game-ece4b",
-    storageBucket: "rpg-browser-game-ece4b.firebasestorage.app",
-    messagingSenderId: "609571218561",
-    appId: "1:609571218561:web:7c92d009bac5a047c2d980",
-    measurementId: "G-EK6K14SXM7"
+    apiKey: "your-api-key-here",
+    authDomain: "your-project.firebaseapp.com",
+    projectId: "your-project-id",
+    storageBucket: "your-project.appspot.com",
+    messagingSenderId: "123456789",
+    appId: "your-app-id"
 };
 
 // تهيئة Firebase
-firebase.initializeApp(firebaseConfig);
+try {
+    if (typeof firebase !== 'undefined') {
+        firebase.initializeApp(firebaseConfig);
+        console.log("✅ Firebase تم التهيئة بنجاح");
+        
+        // تهيئة الخدمات
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+        
+        // جعلها متاحة عالمياً إذا لزم الأمر
+        window.firebaseAuth = auth;
+        window.firebaseDb = db;
+        
+    } else {
+        console.error("❌ Firebase غير معرّف - تأكد من تحميل مكتبة Firebase أولاً");
+    }
+} catch (error) {
+    console.error("❌ خطأ في تهيئة Firebase:", error);
+}
 
-// المراجع الأساسية
-const auth = firebase.auth();
-const db = firebase.firestore();
+// دالة للتحقق من حالة Firebase
+function checkFirebaseStatus() {
+    if (typeof firebase === 'undefined') {
+        console.error("🚨 Firebase غير محمل!");
+        return false;
+    }
+    if (!firebase.apps.length) {
+        console.error("🚨 تطبيق Firebase غير مهيئ!");
+        return false;
+    }
+    console.log("✅ حالة Firebase جيدة");
+    return true;
+}
 
-console.log('✅ Firebase configured successfully!');
+// استدعاء دالة التحقق عند التحميل
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(checkFirebaseStatus, 1000);
+});
