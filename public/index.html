@@ -7,20 +7,23 @@
     <link rel="stylesheet" href="css/style.css">
     
     <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 </head>
 <body>
     <div id="app">
-        <!-- سيتم تحميل المحتوى هنا عبر JavaScript -->
+        <div class="loading">
+            <div class="loading-spinner"></div>
+            <h2>⏳ جاري التحميل...</h2>
+        </div>
     </div>
 
-    <!-- ملفات JavaScript -->
+    <!-- ملفات JavaScript بالترتيب الصحيح -->
     <script src="js/firebase.js"></script>
-    <script src="js/auth.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/game.js"></script>
+    <script src="js/auth.js"></script>
     <script src="js/app.js"></script>
 </body>
 </html>
