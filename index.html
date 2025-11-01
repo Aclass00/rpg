@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -22,45 +23,8 @@
     <!-- ملفات JavaScript بالترتيب الصحيح -->
     <script src="js/firebase.js"></script>
     <script src="js/utils.js"></script>
-    <script src="js/game.js"></script> <!-- يجب أن يكون قبل auth.js -->
+    <script src="js/game.js"></script>
     <script src="js/auth.js"></script>
-    
-    <!-- الكود الرئيسي -->
-    <script>
-    console.log('🚀 بدء تحميل التطبيق...');
-    
-    // تأكد من أن جميع الكلاسات محملة قبل البدء
-    if (typeof AuthSystem !== 'undefined' && typeof GameApp !== 'undefined') {
-        let authSystem;
-        window.addEventListener('load', function() {
-            console.log('✅ الصفحة جاهزة - بدء التطبيق');
-            try {
-                authSystem = new AuthSystem();
-                console.log('✅ AuthSystem تم تهيئته بنجاح');
-            } catch (error) {
-                console.error('❌ خطأ في AuthSystem:', error);
-                document.getElementById('app').innerHTML = `
-                    <div style="padding: 20px; text-align: center; color: white;">
-                        <h2>❌ خطأ في النظام</h2>
-                        <p>${error.message}</p>
-                        <button onclick="location.reload()" style="padding: 10px 20px; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">إعادة تحميل</button>
-                    </div>
-                `;
-            }
-        });
-    } else {
-        console.error('❌ كلاسات غير محملة:', {
-            AuthSystem: typeof AuthSystem,
-            GameApp: typeof GameApp
-        });
-        document.getElementById('app').innerHTML = `
-            <div style="padding: 20px; text-align: center; color: white;">
-                <h2>❌ خطأ في تحميل المكونات</h2>
-                <p>الكلاسات المطلوبة غير محملة. جاري إعادة التحميل...</p>
-            </div>
-        `;
-        setTimeout(() => location.reload(), 2000);
-    }
-    </script>
+    <script src="js/app.js"></script>
 </body>
 </html>
