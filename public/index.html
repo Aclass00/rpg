@@ -4,32 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>لعبة الأبطال - RPG</title>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f);
-            color: white;
-            text-align: center;
-            padding: 50px;
-        }
-        .container {
-            background: rgba(255,255,255,0.1);
-            padding: 30px;
-            border-radius: 15px;
-            display: inline-block;
-        }
-    </style>
+    <link rel="stylesheet" href="css/style.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore-compat.js"></script>
 </head>
 <body>
-    <div class="container">
-        <h1>🎮 لعبة الأبطال</h1>
-        <p>جاري إعداد اللعبة...</p>
-        <p>✅ Firebase جاهز</p>
-        <p>✅ GitHub جاهز</p>
-        <p>🚀 جاري بناء النظام</p>
+    <div id="app">
+        <!-- سيتم تحميل المحتوى هنا عبر JavaScript -->
     </div>
+
+    <!-- ملفات JavaScript -->
+    <script src="js/firebase.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/game.js"></script>
+    <script src="js/app.js"></script>
 </body>
 </html>
